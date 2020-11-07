@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>venue</artifactId>
-
+    <packaging>jar</packaging>
     <name>venue</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
@@ -64,6 +64,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.2</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

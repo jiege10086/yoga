@@ -11,6 +11,7 @@
 
     <groupId>com.woniu</groupId>
     <artifactId>student</artifactId>
+    <packaging>jar</packaging>
 
     <name>student</name>
     <!-- FIXME change it to the project's website -->
