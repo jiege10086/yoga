@@ -84,6 +84,11 @@
 
         <module>test</module>
         <module>gateway_server</module>
+        <module>common</module>
+        <module>student</module>
+        <module>venue</module>
+        <module>backstage</module>
+        <module>coach</module>
     </modules>
 
 
