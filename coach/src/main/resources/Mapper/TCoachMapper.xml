@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.TCoachMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.TCoach">
+        <result column="coa_id" property="coaId" />
+        <result column="coa_phone" property="coaPhone" />
+        <result column="price" property="price" />
+        <result column="factions" property="factions" />
+        <result column="certification_status" property="certificationStatus" />
+        <result column="morning_status" property="morningStatus" />
+        <result column="afternoon_status" property="afternoonStatus" />
+        <result column="night_status" property="nightStatus" />
+        <result column="coa_name" property="coaName" />
+        <result column="coa_password" property="coaPassword" />
+        <result column="coa_head_portrait" property="coaHeadPortrait" />
+        <result column="coa_money" property="coaMoney" />
+        <result column="coa_openid" property="coaOpenid" />
+        <result column="coa_status" property="coaStatus" />
+        <result column="coa_address" property="coaAddress" />
+        <result column="attention_user" property="attentionUser" />
+        <result column="attention_coach" property="attentionCoach" />
+        <result column="attention_venues" property="attentionVenues" />
+        <result column="coa_email" property="coaEmail" />
+        <result column="belongs_venues" property="belongsVenues" />
+        <result column="class_full_status" property="classFullStatus" />
+        <result column="private_status" property="privateStatus" />
+        <result column="show_status" property="showStatus" />
+        <result column="search_status" property="searchStatus" />
+        <result column="bankcard" property="bankcard" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="my_user" property="myUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        coa_id, coa_phone, price, factions, certification_status, morning_status, afternoon_status, night_status, coa_name, coa_password, coa_head_portrait, coa_money, coa_openid, coa_status, coa_address, attention_user, attention_coach, attention_venues, coa_email, belongs_venues, class_full_status, private_status, show_status, search_status, bankcard, truename, idcard, my_user
+    </sql>
+
+</mapper>

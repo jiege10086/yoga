@@ -1,2 +1,3 @@
 com\woniu\utils\JwtUtils.class
 com\woniu\utils\JSONResult.class
+com\woniu\utils\MD5Util.class
