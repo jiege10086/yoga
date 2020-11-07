@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.domain.TCoach;
+import com.woniu.domain.TUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,8 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author jiejiang
  * @since 2020-11-07
  */
-public interface TCoachService extends IService<TCoach> {
-    void insertCoach();
+public interface TUserService extends IService<TUser> {
 
-    void selectCoachById();
 }

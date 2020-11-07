@@ -20,5 +20,13 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
     @Autowired
     private TCoachMapper coachMapper;
 
+    public void selectCoachById(){
+        TCoach tCoach = coachMapper.selectById(1);
+        System.out.println(tCoach);
+    }
 
+    @Override
+    public void insertCoach() {
+
+    }
 }
