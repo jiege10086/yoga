@@ -34,6 +34,22 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         System.out.println(tCoach);
     }
 
+    @Override
+    public TCoach CoachLogin(String name, String password) throws Exception {
+        QueryWrapper<TCoach> tCoachQueryWrapper2 = new QueryWrapper<>();
+        tCoachQueryWrapper2.eq("coa_name", name);
+        if (coachMapper.selectOne(tCoachQueryWrapper2) == null) {
+            throw new NumberNotFoundException("该用户名不存在");
+        }
+
+        tCoachQueryWrapper2.eq("coa_password", password);
+        TCoach tCoach=coachMapper.selectOne(tCoachQueryWrapper2);
+        if(tCoach==null){
+            throw new NumberNotFoundException("密码不正确");
+        }
+        return tCoach;
+    }
+
     //教练注册
     @Override
     public void insertCoach(CoaRegister coaRegister) throws Exception {

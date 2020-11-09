@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.TVenuesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.TVenues">
+        <id column="ven_id" property="venId" />
+        <result column="ven_phone" property="venPhone" />
+        <result column="openid" property="openid" />
+        <result column="ven_address" property="venAddress" />
+        <result column="ven_name" property="venName" />
+        <result column="ven_qq" property="venQq" />
+        <result column="ven_img" property="venImg" />
+        <result column="ven_detail" property="venDetail" />
+        <result column="ven_bulk" property="venBulk" />
+        <result column="ven_coachs" property="venCoachs" />
+        <result column="ven_password" property="venPassword" />
+        <result column="ven_status" property="venStatus" />
+        <result column="ven_email" property="venEmail" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ven_id, ven_phone, openid, ven_address, ven_name, ven_qq, ven_img, ven_detail, ven_bulk, ven_coachs, ven_password, ven_status, ven_email
+    </sql>
+
+</mapper>

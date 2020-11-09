@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.TCourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.TCourse">
+        <result column="cou_id" property="couId" />
+        <result column="cou_name" property="couName" />
+        <result column="cou_time" property="couTime" />
+        <result column="cou_detail" property="couDetail" />
+        <result column="coa_id" property="coaId" />
+        <result column="ven_id" property="venId" />
+        <result column="coa_name" property="coaName" />
+        <result column="ven_name" property="venName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cou_id, cou_name, cou_time, cou_detail, coa_id, ven_id, coa_name, ven_name
+    </sql>
+
+</mapper>
