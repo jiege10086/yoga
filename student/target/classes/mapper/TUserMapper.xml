@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.TUserMapper">
+    <insert id="registUserByPhone">
+        insert into t_user(u_phone,u_password) values(#{uPhone},#{uPassword});
+    </insert>
+    <insert id="registUserByEmamil">
+        insert into t_user(u_e_mail,u_password) values(#{uEmail},#{uPassword});
+    </insert>
+    <update id="perfectUserInfoByUEmail">
+        update t_user set u_phone=#{uPhone},u_e_mail=#{uEMail},u_show_status=#{uShowStatus},u_head_portrait=#{uHeadPortrait},u_name=#{uName},u_address=#{uAddress},u_truename=#{uTruename},u_idcard=#{uIdcard},u_qq=#{uQq} where u_e_mail=#{uEMail};
+    </update>
+    <update id="perfectUserInfoByUphone">
+        update t_user set u_phone=#{uPhone},u_e_mail=#{uEMail},u_show_status=#{uShowStatus},u_head_portrait=#{uHeadPortrait},u_name=#{uName},u_address=#{uAddress},u_truename=#{uTruename},u_idcard=#{uIdcard},u_qq=#{uQq} where u_phone=#{uPhone};
+    </update>
+
+    <select id="searchUserByPhone" resultType="com.woniu.domain.TUser">
+        select * from t_user where u_phone=#{uPhone}
+    </select>
+    <select id="searchUserByEmail" resultType="com.woniu.domain.TUser">
+        select * from t_user where u_e_mail=#{uEmail}
+    </select>
+    <select id="userLoginByPhone" resultType="com.woniu.domain.TUser">
+        select * from t_user where u_phone=#{uPhone} and u_password=#{uPassword};
+    </select>
+    <select id="userLoginByEmail" resultType="com.woniu.domain.TUser">
+        select * from t_user where u_e_mail=#{uEMail} and u_password=#{uPassword};
+    </select>
+</mapper>
