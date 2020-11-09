@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.VenueRecruitmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.VenueRecruitment">
+        <result column="vrid" property="vrid" />
+        <result column="ven_id" property="venId" />
+        <result column="status" property="status" />
+        <result column="factions" property="factions" />
+        <result column="money" property="money" />
+        <result column="time" property="time" />
+        <result column="detail" property="detail" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        vrid, ven_id, status, factions, money, time, detail
+    </sql>
+
+</mapper>
