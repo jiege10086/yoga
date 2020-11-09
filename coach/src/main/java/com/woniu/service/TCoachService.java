@@ -2,6 +2,7 @@ package com.woniu.service;
 
 import com.woniu.domain.TCoach;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.param.CoaRegister;
 
 /**
  * <p>
@@ -12,5 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-11-07
  */
 public interface TCoachService extends IService<TCoach> {
-    void insertCoach();
+    void insertCoach(CoaRegister coaRegister) throws Exception;
+
+    void selectCoachById() throws Exception;
+
+    TCoach CoachLogin(String name,String password) throws  Exception;
 }
