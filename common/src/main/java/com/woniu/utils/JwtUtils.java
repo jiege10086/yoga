@@ -22,7 +22,7 @@ public class JwtUtils {
         Field[] fields = oclass.getDeclaredFields();
         for(Field f:fields) {
             f.setAccessible(true);
-            token.put(f.getName(), (String) f.get(obj));
+            token.put(f.getName(), ""+ f.get(obj));
         }
 
 

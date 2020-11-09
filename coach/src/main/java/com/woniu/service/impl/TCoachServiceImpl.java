@@ -41,8 +41,9 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         if (coachMapper.selectOne(tCoachQueryWrapper2) == null) {
             throw new NumberNotFoundException("该用户名不存在");
         }
-        TCoach tCoach=coachMapper.selectOne(tCoachQueryWrapper2);
+
         tCoachQueryWrapper2.eq("coa_password", password);
+        TCoach tCoach=coachMapper.selectOne(tCoachQueryWrapper2);
         if(tCoach==null){
             throw new NumberNotFoundException("密码不正确");
         }
