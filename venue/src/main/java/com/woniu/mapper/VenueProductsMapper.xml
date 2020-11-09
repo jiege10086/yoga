@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.VenueProductsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.VenueProducts">
+        <result column="vpid" property="vpid" />
+        <result column="card" property="card" />
+        <result column="price" property="price" />
+        <result column="pay_number" property="payNumber" />
+        <result column="detail" property="detail" />
+        <result column="evaluation" property="evaluation" />
+        <result column="ven_id" property="venId" />
+        <result column="level" property="level" />
+        <result column="end_time" property="endTime" />
+        <result column="valid_time" property="validTime" />
+        <result column="use_rules" property="useRules" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        vpid, card, price, pay_number, detail, evaluation, ven_id, level, end_time, valid_time, use_rules
+    </sql>
+
+</mapper>
