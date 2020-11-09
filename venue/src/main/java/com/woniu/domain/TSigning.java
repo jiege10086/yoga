@@ -38,7 +38,7 @@ public class TSigning implements Serializable {
         this.sigId = sigId;
     }
 
-    public Integer getSendId() {
+    public Integer getSendId(int i) {
         return sendId;
     }
 

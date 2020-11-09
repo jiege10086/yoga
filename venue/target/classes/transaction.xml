@@ -42,7 +42,7 @@
     <!--定义切面-->
     <aop:config>
     	<!--定义切入点-->
-    	<aop:pointcut expression="execution(* com.woniu.service.impl.*.*(..))" id="transactionPoint"/>
+    	<aop:pointcut expression="execution(* com.woniu.cq.service.impl.*.*(..))" id="transactionPoint"/>
     	<!--织入 在某个切入点执行通知-->
     	<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPoint"/>
     </aop:config>
