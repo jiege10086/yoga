@@ -32,6 +32,9 @@ public class TVenuesController {
 
     @Resource
     private TVenuesService tVenuesService;
+    /*
+    * 登录
+    * */
     @GetMapping("/login")
     public JSONResult select(HttpServletResponse response,VenDoParam ven) throws Throwable {
         QueryWrapper<TVenues> tVenuesQueryWrapper = new QueryWrapper<>();
@@ -42,7 +45,9 @@ public class TVenuesController {
         return new JSONResult("200","success",null,vens);
     }
 
-
+    /*
+    * 场馆信息完善
+    * */
     @RequestMapping("/updateVenue")
     public JSONResult update( VenDoParam v, MultipartFile file)throws Exception{
         UpdateWrapper<TVenues> tVenuesUpdateWrapper = new UpdateWrapper<>();
@@ -50,6 +55,16 @@ public class TVenuesController {
         boolean update = tVenuesService.update(tVenuesUpdateWrapper);
 
         tVenuesService.updateImg(v,file);
+        return new JSONResult("200","success",null,null);
+    }
+
+    /*
+    * 查看我的签约教练
+    * */
+    @GetMapping("/selectCoachs")
+    public JSONResult selectAll(HttpServletResponse response)throws Exception{
+        String header = response.getHeader("X-token");
+
         return new JSONResult("200","success",null,null);
     }
 }

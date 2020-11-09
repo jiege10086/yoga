@@ -27,7 +27,10 @@ public class TSigningController {
 
     @Resource
     private TSigningService  tSigningService;
-
+    /*
+    * 签约教练
+    *
+    * */
     @PostMapping("/insertsigning")
     public JSONResult insert(SignParam sig)throws Exception{
         TSigning ts = new TSigning();

@@ -30,7 +30,9 @@ public class TCoachController {
 
     @Resource
     private TCoachService tCoachService;
-
+    /*
+    * 分页模糊查询教练
+    * */
     @GetMapping("/select")
     public JSONResult selectCoach(CoachParam co)throws Exception{
         Page<TCoach> tCoachPage = new Page<>(co.getPageSize(),co.getPageNum());
