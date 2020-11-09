@@ -18,4 +18,6 @@ public interface TCoachService extends IService<TCoach> {
     void selectCoachById() throws Exception;
 
     TCoach CoachLogin(String name,String password) throws  Exception;
+
+    void updateCoach(TCoach tCoach) throws Exception;
 }

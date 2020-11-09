@@ -50,6 +50,13 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         return tCoach;
     }
 
+    //教练信息完善
+    @Override
+    public void updateCoach(TCoach tCoach) throws Exception {
+
+        coachMapper.updateById(tCoach);
+    }
+
     //教练注册
     @Override
     public void insertCoach(CoaRegister coaRegister) throws Exception {
@@ -72,6 +79,19 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
             tCoach.setCoaPassword(MD5Util.MD5EncodeUtf8(coaRegister.getuPassword()));
             tCoach.setCoaId(UUIDUtil.getOrderNo());
             tCoach.setCoaHeadPortrait("d//img/ershou1_2.jpg");
+            //动态公开状态,好友还是全部
+            tCoach.setShowStatus(1);
+            tCoach.setMorningStatus(0);
+            tCoach.setAfternoonStatus(0);
+            tCoach.setNightStatus(0);
+            //认证状态
+            tCoach.setCertificationStatus(0);
+            //是否接受私教上课
+            tCoach.setPrivateStatus(0);
+            //课满状态
+            tCoach.setClassFullStatus(0);
+            //是否课满,不接受私教也可以搜索
+            tCoach.setSearchStatus(0);
             coachMapper.insert(tCoach);
         }
 
@@ -94,6 +114,19 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
             tCoach.setCoaPassword(MD5Util.MD5EncodeUtf8(coaRegister.getuPassword()));
             tCoach.setCoaId(UUIDUtil.getOrderNo());
             tCoach.setCoaHeadPortrait("d//img/ershou1_2.jpg");
+            //动态公开状态,好友还是全部
+            tCoach.setShowStatus(1);
+            tCoach.setMorningStatus(0);
+            tCoach.setAfternoonStatus(0);
+            tCoach.setNightStatus(0);
+            //认证状态
+            tCoach.setCertificationStatus(0);
+            //是否接受私教上课
+            tCoach.setPrivateStatus(0);
+            //课满状态
+            tCoach.setClassFullStatus(0);
+            //是否课满,不接受私教也可以搜索
+            tCoach.setSearchStatus(0);
             coachMapper.insert(tCoach);
         }
     }

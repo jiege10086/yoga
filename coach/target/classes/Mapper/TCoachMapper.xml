@@ -32,11 +32,12 @@
         <result column="truename" property="truename" />
         <result column="idcard" property="idcard" />
         <result column="my_user" property="myUser" />
+        <result column="expect_money" property="expectMoney" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        coa_id, coa_phone, price, factions, certification_status, morning_status, afternoon_status, night_status, coa_name, coa_password, coa_head_portrait, coa_money, coa_openid, coa_status, coa_address, attention_user, attention_coach, attention_venues, coa_email, belongs_venues, class_full_status, private_status, show_status, search_status, bankcard, truename, idcard, my_user
+        coa_id, coa_phone, price, factions, certification_status, morning_status, afternoon_status, night_status, coa_name, coa_password, coa_head_portrait, coa_money, coa_openid, coa_status, coa_address, attention_user, attention_coach, attention_venues, coa_email, belongs_venues, class_full_status, private_status, show_status, search_status, bankcard, truename, idcard, my_user, expect_money
     </sql>
 
 </mapper>

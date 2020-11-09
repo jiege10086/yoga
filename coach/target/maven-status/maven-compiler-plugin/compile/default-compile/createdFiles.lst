@@ -12,5 +12,6 @@ com\woniu\App.class
 com\woniu\exception\GlobalExceptionHandler.class
 com\woniu\service\impl\TUserServiceImpl.class
 com\woniu\param\CoaRegister.class
+com\woniu\dto\CoaDtoToken.class
 com\woniu\service\impl\TCoachServiceImpl.class
 com\woniu\exception\NumberNotFoundException.class
