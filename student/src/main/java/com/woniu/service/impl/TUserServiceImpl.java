@@ -63,6 +63,22 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     public void perfectUserInfoByUphone(Integer uPhone, String uEMail, Integer uShowStatus, String uHeadPortrait, String uName, String uAddress, String uTruename, Integer uIdcard, Integer uQq) {
         tUserMapper.perfectUserInfoByUphone(uPhone,uEMail,uShowStatus,uHeadPortrait,uName,uAddress,uTruename,uIdcard,uQq);
     }
+
+    @Override
+    public TUser searchUserById(Integer uId) {
+        TUser tUser = tUserMapper.searchUserById(uId);
+        return tUser;
+    }
+
+    @Override
+    public void addUserMoney(Integer uId, double uMoney) {
+        tUserMapper.addUserMoney(uId,uMoney);
+    }
+
+    @Override
+    public void updateUserMoney(Integer uId, double money) {
+        tUserMapper.updateUserMoney(uId,money);
+    }
 }
 
 
