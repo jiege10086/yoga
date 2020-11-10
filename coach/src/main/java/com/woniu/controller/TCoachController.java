@@ -66,5 +66,29 @@ public class TCoachController {
         tCoachService.updateCoach(tCoach);
         return  new JSONResult("200","完善成功",null,null);
     }
+
+    //获得新密码
+    @RequestMapping("/newPassword")
+    public JSONResult newPassword(String name) throws Exception {
+        return new JSONResult("200","新密码30分钟有效",null, tCoachService.newPassword(name));
+    }
+
+    //新密码登录
+    @RequestMapping("/newPasswordLogin")
+    public JSONResult newPasswordLogin(String name,String password) throws Exception {
+        tCoachService.newPasswordLogin(name,password);
+        return new JSONResult("200","验证成功",null,null);
+    }
+
+    //取现
+    @RequestMapping("/coaGetMoney")
+    public JSONResult coaGetMoney(@RequestHeader("X-token") String token,Double money,int banecard) throws Throwable {
+        if(token==null){
+            throw new NumberNotFoundException("权限不足,您还未登陆");
+        }
+        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
+        tCoachService.coaGetMoney(banecard,money,Integer.parseInt(coach.getCoaId()));
+        return new JSONResult("200","取现成功",null,null);
+    }
 }
 

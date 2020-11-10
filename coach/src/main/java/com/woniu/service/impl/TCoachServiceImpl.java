@@ -2,14 +2,17 @@ package com.woniu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.domain.TCoach;
+import com.woniu.domain.TConsumption;
 import com.woniu.exception.NumberNotFoundException;
 import com.woniu.mapper.TCoachMapper;
+import com.woniu.mapper.TConsumptionMapper;
 import com.woniu.param.CoaRegister;
 import com.woniu.service.TCoachService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.woniu.utils.MD5Util;
 import com.woniu.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +31,12 @@ import java.util.UUID;
 public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> implements TCoachService {
     @Autowired
     private TCoachMapper coachMapper;
+
+    @Autowired
+    private TConsumptionMapper tConsumptionMapper;
+
+    @Autowired
+    private RedisTemplate<String, Object> rt;
 
     public void selectCoachById() throws Exception{
         TCoach tCoach = coachMapper.selectById(1);
@@ -53,8 +62,52 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
     //教练信息完善
     @Override
     public void updateCoach(TCoach tCoach) throws Exception {
-
         coachMapper.updateById(tCoach);
+    }
+
+    //新密码返回
+    @Override
+    public String newPassword(String coaName) throws Exception {
+        String password = UUID.randomUUID().toString().substring(0, 6);
+        rt.opsForValue().set("newpaword"+coaName,password,30*60);
+        return password;
+    }
+
+    //新密码登录
+    @Override
+    public void newPasswordLogin(String coaName,String password) throws Exception {
+        Object newpassword = rt.opsForValue().get("newpaword" + coaName);
+        if(newpassword==null){
+            throw new NumberNotFoundException("密码已过期");
+        }
+        if(password!=newpassword.toString()){
+            throw new NumberNotFoundException("密码不正确");
+        }
+        QueryWrapper<TCoach> tCoachQueryWrapper = new QueryWrapper<>();
+        tCoachQueryWrapper.eq("coa_name", coaName);
+        TCoach coach = coachMapper.selectOne(tCoachQueryWrapper);
+        coach.setCoaPassword(MD5Util.MD5EncodeUtf8(newpassword.toString()));
+        coachMapper.updateById(coach);
+    }
+
+    //取现
+    public void coaGetMoney(Integer bankcard, Double money, Integer coaId) throws Exception {
+        TCoach coach = coachMapper.selectById(coaId);
+        if(coach==null){
+            throw new NumberNotFoundException("该用户不存在");
+        }
+        if(coach.getCoaMoney()<money){
+            throw new NumberNotFoundException("您的余额不足");
+        }
+        coach.setCoaMoney(coach.getCoaMoney()-money);
+        TConsumption tConsumption = new TConsumption();
+        tConsumption.setDetail("取现");
+        //0是取现,1是消费
+        tConsumption.setStatus(1);
+        tConsumption.setMoney(money);
+        tConsumption.setPeopleId(coaId);
+        tConsumption.setPeoRole(1);
+        tConsumptionMapper.insert(tConsumption);
     }
 
     //教练注册

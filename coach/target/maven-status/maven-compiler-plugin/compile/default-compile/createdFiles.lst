@@ -1,6 +1,7 @@
 com\woniu\mapper\TCoachMapper.class
 com\woniu\service\TCoachService.class
 com\woniu\domain\TCoach.class
+com\woniu\jedisconfig\RtUtilsConfig.class
 com\woniu\controller\Start.class
 com\woniu\controller\Test.class
 com\woniu\domain\TUser.class

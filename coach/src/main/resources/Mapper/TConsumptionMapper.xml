@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.TConsumptionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.TConsumption">
+        <id column="consu_id" property="consuId" />
+        <result column="people_id" property="peopleId" />
+        <result column="time" property="time" />
+        <result column="money" property="money" />
+        <result column="status" property="status" />
+        <result column="detail" property="detail" />
+        <result column="peo_role" property="peoRole" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        consu_id, people_id, time, money, status, detail, peo_role
+    </sql>
+
+</mapper>
