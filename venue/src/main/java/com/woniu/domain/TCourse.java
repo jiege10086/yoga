@@ -2,6 +2,7 @@ package com.woniu.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Builder;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * @author zly
  * @since 2020-11-07
  */
+@Builder
 public class TCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +34,18 @@ public class TCourse implements Serializable {
     private String coaName;
 
     private String venName;
+
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+
 
 
     public Integer getCouId() {
