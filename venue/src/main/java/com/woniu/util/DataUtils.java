@@ -1,4 +1,4 @@
-package com.woniu.cq.util;
+package com.woniu.util;
 
 
 import java.text.SimpleDateFormat;
