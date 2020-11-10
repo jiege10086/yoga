@@ -1,5 +1,7 @@
 package com.woniu.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,11 @@ import java.io.Serializable;
  * </p>
  *
  * @author jiejiang
- * @since 2020-11-07
+ * @since 2020-11-09
  */
 public class TCoach implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    @TableId
     private Integer coaId;
 
     private Integer coaPhone;
@@ -69,6 +70,8 @@ public class TCoach implements Serializable {
     private Integer idcard;
 
     private String myUser;
+
+    private Double expectMoney;
 
 
     public Integer getCoaId() {
@@ -295,6 +298,14 @@ public class TCoach implements Serializable {
         this.myUser = myUser;
     }
 
+    public Double getExpectMoney() {
+        return expectMoney;
+    }
+
+    public void setExpectMoney(Double expectMoney) {
+        this.expectMoney = expectMoney;
+    }
+
     @Override
     public String toString() {
         return "TCoach{" +
@@ -326,6 +337,7 @@ public class TCoach implements Serializable {
         ", truename=" + truename +
         ", idcard=" + idcard +
         ", myUser=" + myUser +
+        ", expectMoney=" + expectMoney +
         "}";
     }
 }

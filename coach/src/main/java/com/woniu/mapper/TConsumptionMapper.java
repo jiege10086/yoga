@@ -1,6 +1,6 @@
 package com.woniu.mapper;
 
-import com.woniu.domain.TCoach;
+import com.woniu.domain.TConsumption;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jiejiang
  * @since 2020-11-09
  */
-public interface TCoachMapper extends BaseMapper<TCoach> {
+public interface TConsumptionMapper extends BaseMapper<TConsumption> {
 
 }

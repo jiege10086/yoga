@@ -17,18 +17,18 @@ public class JwtUtils {
 
     //生成
     public static String createToken(Object obj) throws Throwable, IllegalAccessException {
-        Map<String, String> token = new HashMap<String,String>();
+        Map<String, Object> token = new HashMap<String, Object>();
         Class<? extends Object> oclass = obj.getClass();
         Field[] fields = oclass.getDeclaredFields();
         for(Field f:fields) {
             f.setAccessible(true);
-            token.put(f.getName(), ""+ f.get(obj));
+            token.put(f.getName(), f.get(obj));
         }
 
 
         Key keyFor = Keys.hmacShaKeyFor(key.getBytes());
         return Jwts.builder().setClaims(token)
-                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 100 * 60 * 1000))
                 .signWith(keyFor)
                 .compact();
     }
