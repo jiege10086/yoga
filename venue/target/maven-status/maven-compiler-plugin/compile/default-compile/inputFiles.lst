@@ -42,4 +42,6 @@ C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\map
 C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\service\impl\TSigningServiceImpl.java
 C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\controller\VenueRecruitmentController.java
 C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\doParam\CourseParam.java
+C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\config\MybatisPlusConfig.java
 C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\mapper\TSigningMapper.java
+C:\Users\Administrator\IdeaProjects\yoga_prent\venue\src\main\java\com\woniu\util\EmailUtil.java
