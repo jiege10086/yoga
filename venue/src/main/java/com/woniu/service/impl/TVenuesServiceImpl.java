@@ -46,9 +46,8 @@ public class TVenuesServiceImpl extends ServiceImpl<TVenuesMapper, TVenues> impl
         System.out.println(filename);
 
         System.out.println(v.getVenId());
-        TVenues tVenues = new TVenues();
-        tVenues.setVenImg(filename);
-        tVenues.setVenId(v.getVenId());
-        tVenuesMapper.updateById(tVenues);
+        TVenues build = TVenues.builder().venImg(filename).venId(v.getVenId()).build();
+
+        tVenuesMapper.updateById(build);
     }
 }
