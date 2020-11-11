@@ -26,4 +26,6 @@ public interface TCoachService extends IService<TCoach> {
     void newPasswordLogin(String coaName,String password) throws  Exception;
 
     void coaGetMoney(Integer bankcard,Double money,Integer coaId)throws  Exception;
+
+
 }

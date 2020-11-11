@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -69,18 +70,20 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
     @Override
     public String newPassword(String coaName) throws Exception {
         String password = UUID.randomUUID().toString().substring(0, 6);
-        rt.opsForValue().set("newpaword"+coaName,password,30*60);
+        rt.opsForValue().set("newpassword"+coaName,password,30*60, TimeUnit.SECONDS);
         return password;
     }
 
     //新密码登录
     @Override
     public void newPasswordLogin(String coaName,String password) throws Exception {
-        Object newpassword = rt.opsForValue().get("newpaword" + coaName);
+        Object newpassword = rt.opsForValue().get("newpassword" + coaName);
+        System.out.println(newpassword);
+        System.out.println(password);
         if(newpassword==null){
             throw new NumberNotFoundException("密码已过期");
         }
-        if(password!=newpassword.toString()){
+        if(!(password.equals(newpassword.toString()))){
             throw new NumberNotFoundException("密码不正确");
         }
         QueryWrapper<TCoach> tCoachQueryWrapper = new QueryWrapper<>();

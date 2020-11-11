@@ -1,7 +1,9 @@
 package com.woniu.controller;
 
 
+
 import com.woniu.domain.TCoach;
+import com.woniu.dto.CoaAddressDtoList;
 import com.woniu.dto.CoaDtoToken;
 import com.woniu.exception.NumberNotFoundException;
 import com.woniu.param.CoaRegister;
@@ -10,9 +12,17 @@ import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import com.woniu.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.GeoResult;
+import org.springframework.data.geo.GeoResults;
+import org.springframework.data.geo.Point;
+import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +38,9 @@ public class TCoachController {
     @Autowired
     private TCoachServiceImpl tCoachService;
 
+    @Autowired
+    private RedisTemplate<String, Object> rt;
+
     @RequestMapping("/coaRegister")
     public JSONResult coaRegister(@RequestBody CoaRegister coaRegister) throws Exception{
         tCoachService.insertCoach(coaRegister);
@@ -41,7 +54,7 @@ public class TCoachController {
 
     //教练登录
     @RequestMapping("/coaLogin")
-    public JSONResult coaLogin(HttpServletResponse response, String name, String password) throws Throwable {
+    public JSONResult coaLogin(HttpServletResponse response, String name, String password,Double jingdu,Double weidu,Double fanwei) throws Throwable {
         TCoach tCoach =tCoachService.CoachLogin(name, MD5Util.MD5EncodeUtf8(password));
         boolean flag=true;
         if(tCoach.getIdcard()==null){
@@ -52,6 +65,10 @@ public class TCoachController {
         coaDtoToken.setRole(1+"");
         String token = JwtUtils.createToken(coaDtoToken);
         response.setHeader("X-token",token);
+        //删除上次登录地址
+        rt.opsForGeo().remove("coaAddress",tCoach.getCoaId());
+        //保存这次登录地址
+        rt.opsForGeo().add("coaAddress",new Point(jingdu, weidu),tCoach.getCoaId());
         return new JSONResult("200","登陆成功",null,flag);
     }
 
@@ -90,5 +107,6 @@ public class TCoachController {
         tCoachService.coaGetMoney(banecard,money,Integer.parseInt(coach.getCoaId()));
         return new JSONResult("200","取现成功",null,null);
     }
+
 }
 

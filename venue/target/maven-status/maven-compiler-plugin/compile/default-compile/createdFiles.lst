@@ -1,0 +1,5 @@
+com\woniu\domain\VenueRecruitment$VenueRecruitmentBuilder.class
+com\woniu\util\MPGenerator.class
+com\woniu\config\MybatisPlusConfig.class
+com\woniu\util\EmailUtil.class
+com\woniu\App.class
