@@ -19,7 +19,7 @@ public class TVenues implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "ven_id", type = IdType.AUTO)
+    @TableId(value = "ven_id")
     private Integer venId;
 
     private Integer venPhone;

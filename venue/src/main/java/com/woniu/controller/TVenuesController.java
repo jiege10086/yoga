@@ -8,21 +8,23 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woniu.doParam.VenDoParam;
 import com.woniu.domain.TCoach;
+import com.woniu.domain.TSigning;
 import com.woniu.domain.TVenues;
 import com.woniu.dot.VenCoach;
 import com.woniu.dot.VenDotCoachs;
 import com.woniu.dot.VenDotToken;
 import com.woniu.service.TCoachService;
+import com.woniu.service.TSigningService;
 import com.woniu.service.TVenuesService;
+import com.woniu.util.EmailUtil;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import com.woniu.utils.MD5Util;
+import com.woniu.utils.UUIDUtil;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -49,13 +51,24 @@ public class TVenuesController {
     @Resource
     private TCoachService tCoachService;
 
+    @Resource
+    private TSigningService tSigningService;
     /*
      * 登录
      * */
     @GetMapping("/login")
     public JSONResult select(HttpServletResponse response, VenDoParam ven) throws Throwable {
+
         QueryWrapper<TVenues> tVenuesQueryWrapper = new QueryWrapper<>();
-        tVenuesQueryWrapper.eq("ven_phone", ven.getVenPhone()).eq("ven_password", MD5Util.MD5EncodeUtf8(ven.getVenPassword()));
+        if(ven.getVenPhone()!=null){
+            tVenuesQueryWrapper.eq("ven_phone", ven.getVenPhone());
+        }
+        if(!StringUtils.isEmpty(ven.getVenEmail())){
+            tVenuesQueryWrapper.eq("ven_email",ven.getVenEmail());
+        }
+        if(!StringUtils.isEmpty(ven.getVenPassword())){
+            tVenuesQueryWrapper.eq("ven_password", MD5Util.MD5EncodeUtf8(ven.getVenPassword()));
+        }
         TVenues vens = tVenuesService.getOne(tVenuesQueryWrapper);
         VenDotToken build = VenDotToken.builder().venId(vens.getVenId() + "").role(2 + "").build();
         String token = JwtUtils.createToken(build);
@@ -64,7 +77,23 @@ public class TVenuesController {
         System.out.println(token);
         return new JSONResult("200", "success", null, vens);
     }
-
+    /*
+    * 邮箱发送密码
+    * */
+    @RequestMapping("/email")
+    public JSONResult emailPassword(VenDoParam ven)throws Exception{
+        EmailUtil.sendCode(ven.getVenEmail());
+        return new JSONResult("200","success",null,null);
+    }
+    /*
+    * 邮箱注册
+    * */
+    @RequestMapping("/emailReg")
+    public JSONResult emailRegisster(VenDoParam ven)throws Exception{
+        TVenues build = TVenues.builder().venId(UUIDUtil.getOrderNo()).venEmail(ven.getVenEmail()).venPassword(MD5Util.MD5EncodeUtf8(ven.getVenPassword())).build();
+        boolean save = tVenuesService.save(build);
+        return new JSONResult("200","success",null,null);
+    }
     /*
      * 场馆信息完善
      * */
@@ -88,10 +117,10 @@ public class TVenuesController {
         TVenues build = TVenues.builder().venId(Integer.parseInt(venDotToken.getVenId())).build();
         TVenues byId = tVenuesService.getById(build);
         if (byId != null) {
-            VenCoach venCoach = JSON.parseObject(byId.getVenCoachs(), VenCoach.class);
+            List<Integer> integers = JSON.parseArray(byId.getVenCoachs(), Integer.class);
             List<Object> list = new ArrayList<>();
-            for (int i = 0; i < venCoach.getCoachs().size(); i++) {
-                Integer id = venCoach.getCoachs().get(i).getId();
+            for (int i = 0; i < integers.size(); i++) {
+                Integer id = integers.get(i);
                 QueryWrapper<TCoach> tc = new QueryWrapper<>();
                 tc.eq("coa_id", id);
                 list.add(tCoachService.list(tc));
@@ -113,20 +142,56 @@ public class TVenuesController {
         if(byId==null){
             return new JSONResult("500", "没有该教练", null, null);
         }
-        VenCoach venCoach = JSON.parseObject(byId.getVenCoachs(), VenCoach.class);
-        System.out.println(coaId);
-        for (int i = 0; i < venCoach.getCoachs().size(); i++) {
-            if(venCoach.getCoachs().get(i).getId()==coaId){
-                venCoach.getCoachs().remove(i);
+        List<Integer> integers = JSON.parseArray(byId.getVenCoachs(), Integer.class);
+        for (int i = 0; i < integers.size(); i++) {
+            if(integers.get(i)==coaId){
+                integers.remove(i);
                 break;
             }
         }
-        String s = JSON.toJSON(venCoach).toString();
-        TVenues build1 = TVenues.builder().venCoachs(s).build();
+        String s = JSON.toJSON(integers).toString();
         UpdateWrapper<TVenues> tup = new UpdateWrapper<>();
-        tup.eq("ven_id",build.getVenId()).set("ven_coachs",build1.getVenCoachs());
+        tup.eq("ven_id",build.getVenId()).set("ven_coachs",s);
         boolean update = tVenuesService.update(tup);
         return new JSONResult("200","success",null,null);
     }
+
+    /*
+    * 同意教练签约场馆
+    * */
+    @RequestMapping("/updateSig")
+    public JSONResult updateSig(@RequestHeader("X-token") String token,Integer coaId) throws Throwable {
+        if(token==null){
+            return new JSONResult("500","权限不足",null,null);
+        }
+        VenDotToken venDotToken = JwtUtils.parseToken(token, VenDotToken.class);
+        TVenues build = TVenues.builder().venId(Integer.parseInt(venDotToken.getVenId())).build();
+        UpdateWrapper<TSigning> tSigningUpdateWrapper = new UpdateWrapper<>();
+        tSigningUpdateWrapper.eq("send_id",coaId).eq("accept_id",build.getVenId()).set("agree_status",1);
+        boolean update = tSigningService.update(tSigningUpdateWrapper);
+        if(update){
+            TCoach byId = tCoachService.getById(coaId);
+            System.out.println(byId.getBelongsVenues());
+            if(byId.getBelongsVenues()==null||byId.getBelongsVenues().equals("")){
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(build.getVenId());
+                String s = JSON.toJSON(list).toString();
+                System.out.println(s);
+                UpdateWrapper<TCoach> coachUpdateWrapper = new UpdateWrapper<>();
+                coachUpdateWrapper.eq("coa_id",coaId).set("belongs_venues",s);
+                tCoachService.update(coachUpdateWrapper);
+            }else {
+            String belongsVenues = byId.getBelongsVenues();
+            List<Integer> integers = JSON.parseArray(belongsVenues, Integer.class);
+            integers.add(build.getVenId());
+            String s = JSON.toJSON(integers).toString();
+            UpdateWrapper<TCoach> coachUpdateWrapper = new UpdateWrapper<>();
+            coachUpdateWrapper.eq("coa_id",coaId).set("belongs_venvues",s);
+            tCoachService.update(coachUpdateWrapper);
+            }
+        }
+        return new JSONResult("200","success",null,null);
+    }
+
 }
 
