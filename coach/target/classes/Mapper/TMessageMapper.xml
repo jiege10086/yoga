@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.TMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.TMessage">
+        <id column="mes_id" property="mesId" />
+        <result column="send_id" property="sendId" />
+        <result column="detail" property="detail" />
+        <result column="accept_id" property="acceptId" />
+        <result column="peo_role" property="peoRole" />
+        <result column="mes_time" property="mesTime" />
+        <result column="read_status" property="readStatus" />
+        <result column="send_name" property="sendName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        mes_id, send_id, detail, accept_id, peo_role, mes_time, read_status, send_name
+    </sql>
+
+</mapper>

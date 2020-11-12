@@ -1,5 +1,7 @@
 package com.woniu.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -13,7 +15,7 @@ import java.io.Serializable;
 public class TUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId
     private Integer uId;
 
     private Integer uPhone;
