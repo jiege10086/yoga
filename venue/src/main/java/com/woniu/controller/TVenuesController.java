@@ -17,12 +17,14 @@ import com.woniu.service.TCoachService;
 import com.woniu.service.TSigningService;
 import com.woniu.service.TVenuesService;
 import com.woniu.util.EmailUtil;
+import com.woniu.util.MessageHandler;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import com.woniu.utils.MD5Util;
 import com.woniu.utils.UUIDUtil;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +33,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -53,6 +57,9 @@ public class TVenuesController {
 
     @Resource
     private TSigningService tSigningService;
+    @Resource
+    //阿里云短信模板
+    private RedisTemplate<String, String> redisTemplate;
     /*
      * 登录
      * */
@@ -92,6 +99,53 @@ public class TVenuesController {
     public JSONResult emailRegisster(VenDoParam ven)throws Exception{
         TVenues build = TVenues.builder().venId(UUIDUtil.getOrderNo()).venEmail(ven.getVenEmail()).venPassword(MD5Util.MD5EncodeUtf8(ven.getVenPassword())).build();
         boolean save = tVenuesService.save(build);
+        return new JSONResult("200","success",null,null);
+    }
+
+    /*
+    * 短信发送验证码
+    * */
+    @RequestMapping("/phone")
+    public JSONResult phone(String venPhone)throws Exception{
+        MessageHandler messageHandler = new MessageHandler();
+        QueryWrapper<TVenues> tv = new QueryWrapper<>();
+
+        //生成动态验证码并存入redis中
+        String code = ((int) ((Math.random() * 9 + 1) * 100000)) + "";
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("code", code);
+        System.out.println(code+"------------------------");
+        boolean send = messageHandler.send(venPhone, "SMS_205460989", param);
+        if(send){
+            //存入redis（可以用redis暂存，校验
+            redisTemplate.opsForValue().set(venPhone, code, 300, TimeUnit.SECONDS);
+            System.out.println(venPhone);
+            return new JSONResult("200","success",null,null);
+        }else {
+            return new JSONResult("500","手机号不能为空",null,null);
+        }
+    }
+    /*
+    * 短信注册
+    * */
+    @PostMapping("/phoneReg")
+    public JSONResult phoneReg(String venPhone,String param,String venPassword)throws Exception{
+            String code = redisTemplate.opsForValue().get(venPhone);
+            if(code.equals(param)){
+                int phone = (int)Long.parseLong(venPhone);
+
+                TVenues build = TVenues.builder().venId(UUIDUtil.getOrderNo()).venPhone(phone).venPassword(MD5Util.MD5EncodeUtf8(venPassword)).build();
+            tVenuesService.save(build);
+                return new JSONResult("200","success",null,null);
+            }
+        return new JSONResult("500","验证码错误",null,null);
+
+    }
+    /*
+    * 找回密码
+    * */
+    @PutMapping("/updatePwd")
+    public JSONResult updatePwd()throws Exception{
         return new JSONResult("200","success",null,null);
     }
     /*
