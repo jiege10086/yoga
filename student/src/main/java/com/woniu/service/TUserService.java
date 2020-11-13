@@ -2,7 +2,13 @@ package com.woniu.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.domain.TMessage;
+import com.woniu.domain.TOrder;
 import com.woniu.domain.TUser;
+import com.woniu.dto.CoaAddressDtoList;
+import com.woniu.exception.NumberNotFoundException;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +35,23 @@ public interface TUserService extends IService<TUser> {
     void perfectUserInfoByUEmail(Integer uPhone, String uEMail, Integer uShowStatus, String uHeadPortrait, String uName, String uAddress, String uTruename, Integer uIdcard, Integer uQq);
 
     void perfectUserInfoByUphone(Integer uPhone, String uEMail, Integer uShowStatus, String uHeadPortrait, String uName, String uAddress, String uTruename, Integer uIdcard, Integer uQq);
+
+    TUser searchUserById(Integer uId);
+
+    void addUserMoney(Integer uId, double uMoney);
+
+    void updateUserMoney(Integer uId, double money);
+
+    void updateUserAttention(Integer userId, String json);
+
+    void updateUserVenAttention(Integer userId, String json);
+
+    void updateUserUserAttention(Integer userId, String json);
+
+    List<CoaAddressDtoList> selectCoaByAddress(double longitude, double latitude, double fanwei);
+
+
+    String newPassword(String name);
+
+    void newPasswordLogin(String uName, String password) throws NumberNotFoundException;
 }

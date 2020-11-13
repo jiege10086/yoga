@@ -9,6 +9,7 @@ import com.woniu.domain.TCoach;
 import com.woniu.domain.TUser;
 import com.woniu.dto.CoaAddressDtoList;
 import com.woniu.dto.CoaUserDto;
+import com.woniu.dto.CoachDto;
 import com.woniu.mapper.TCoachMapper;
 import com.woniu.mapper.TUserMapper;
 import com.woniu.service.TUserService;
@@ -56,14 +57,10 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         queryWrapper.in("u_id",users);
         PageHelper.startPage(pageIndex,pageSize);
         List<TUser> tUsers = tUserMapper.selectList(queryWrapper);
-        ArrayList<CoaUserDto> coaUserDtos = new ArrayList<CoaUserDto>();
-        for(TUser user:tUsers){
-            CoaUserDto coaUserDto = new CoaUserDto();
-            BeanUtils.copyProperties(user,coaUserDto);
-            coaUserDtos.add(coaUserDto);
-        }
-        PageInfo<CoaUserDto> pageInfo=new PageInfo<CoaUserDto>(coaUserDtos);
-        return pageInfo;
+        PageInfo<TUser> pageInfo=new PageInfo<TUser>(tUsers);
+        PageInfo<CoaUserDto> newpageInfo=new PageInfo<CoaUserDto>();
+        BeanUtils.copyProperties(pageInfo,newpageInfo);
+        return newpageInfo;
     }
 
     @Override
@@ -71,7 +68,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         //放入半径和距离
         Circle circle = new Circle(new Point(longitude,latitude),fanwei*1000);
         //获得满足条件的教练名称对象
-        GeoResults<RedisGeoCommands.GeoLocation<Object>> coaAddress = rt.opsForGeo().radius("coaAddress", circle);
+        GeoResults<RedisGeoCommands.GeoLocation<Object>> coaAddress = rt.opsForGeo().radius("userAddress", circle);
         //获得经度和纬度满足的条件对象
         List<GeoResult<RedisGeoCommands.GeoLocation<Object>>> content = coaAddress.getContent();
         //新建list放坐标对象
@@ -83,7 +80,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
             int denghao = conten.indexOf("=");
             String truename = conten.substring(denghao + 1, douhao);
             //取出id的经纬度
-            List<Point> points = rt.opsForGeo().position("coaAddress", Integer.parseInt(truename));
+            List<Point> points = rt.opsForGeo().position("userAddress", Integer.parseInt(truename));
             Point coapoint = points.get(0);
             //放入对象中
             CoaAddressDtoList coaAddressDto = new CoaAddressDtoList();

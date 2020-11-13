@@ -12,17 +12,12 @@ import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import com.woniu.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Circle;
-import org.springframework.data.geo.GeoResult;
-import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
-import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * <p>
@@ -41,12 +36,14 @@ public class TCoachController {
     @Autowired
     private RedisTemplate<String, Object> rt;
 
+    //教练注册
     @RequestMapping("/coaRegister")
     public JSONResult coaRegister(@RequestBody CoaRegister coaRegister) throws Exception{
         tCoachService.insertCoach(coaRegister);
         return new JSONResult("200","注册成功",null,null);
     }
 
+    //根据id查询教练
     @GetMapping
     public void selectCoachById(int coaId) throws Exception{
         tCoachService.selectCoachById();
@@ -63,8 +60,10 @@ public class TCoachController {
         CoaDtoToken coaDtoToken = new CoaDtoToken();
         coaDtoToken.setCoaId(tCoach.getCoaId()+"");
         coaDtoToken.setRole(1+"");
+        coaDtoToken.setCoaName(tCoach.getCoaName());
         String token = JwtUtils.createToken(coaDtoToken);
         response.setHeader("X-token",token);
+
         //删除上次登录地址
         rt.opsForGeo().remove("coaAddress",tCoach.getCoaId());
         //保存这次登录地址
@@ -86,8 +85,8 @@ public class TCoachController {
 
     //获得新密码
     @RequestMapping("/newPassword")
-    public JSONResult newPassword(String name) throws Exception {
-        return new JSONResult("200","新密码30分钟有效",null, tCoachService.newPassword(name));
+    public JSONResult newPassword(String name,int status) throws Exception {
+        return new JSONResult("200","新密码30分钟有效",null, tCoachService.newPassword(name,status));
     }
 
     //新密码登录
@@ -108,5 +107,15 @@ public class TCoachController {
         return new JSONResult("200","取现成功",null,null);
     }
 
+    //教练添加我的关注
+    @RequestMapping("/insertAttention")
+    public JSONResult insertAttention(@RequestHeader("X-token")String token,int peoId,int role) throws Throwable {
+        if(token==null){
+            throw new NumberNotFoundException("权限不足,您还未登陆");
+        }
+        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
+        tCoachService.insertAttention(Integer.parseInt(coach.getCoaId()),peoId,role);
+        return new JSONResult("200","添加成功",null,null);
+    }
 }
 

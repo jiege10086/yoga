@@ -32,4 +32,19 @@ public interface TUserMapper extends BaseMapper<TUser> {
     void perfectUserInfoByUEmail(Integer uPhone, String uEMail, Integer uShowStatus, String uHeadPortrait, String uName, String uAddress, String uTruename, Integer uIdcard, Integer uQq);
 
     void perfectUserInfoByUphone(Integer uPhone, String uEMail, Integer uShowStatus, String uHeadPortrait, String uName, String uAddress, String uTruename, Integer uIdcard, Integer uQq);
+
+    TUser searchUserById(Integer uId);
+
+    void addUserMoney(Integer uId, double uMoney);
+
+    void updateUserMoney(Integer uId, double money);
+
+    void updateUserAttention(Integer userId, String json);
+
+    void updateUserVenAttention(Integer userId, String json);
+
+    void updateUserUserAttention(Integer userId, String json);
+
+
+    void addCoaClich(Integer coaId, String coaName);
 }

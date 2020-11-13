@@ -49,10 +49,8 @@ public class TMessageController {
             throw new NumberNotFoundException("权限不足,您还未登陆");
         }
         CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
-        coaMessageParam.setSendId(Integer.parseInt(coach.getCoaId()));
         coaMessageParam.setPeoRole(1);
-        coaMessageParam.setReadStatus("未读");
-        tMessageService.insertMessage(coaMessageParam);
+        tMessageService.insertMessage(coaMessageParam,coach);
         return new JSONResult("200","新增成功",null,null);
     }
 }

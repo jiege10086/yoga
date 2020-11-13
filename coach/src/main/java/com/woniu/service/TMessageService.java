@@ -3,6 +3,7 @@ package com.woniu.service;
 import com.github.pagehelper.PageInfo;
 import com.woniu.domain.TMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.dto.CoaDtoToken;
 import com.woniu.dto.CoaMessageDto;
 import com.woniu.param.CoaMessageParam;
 
@@ -20,5 +21,5 @@ public interface TMessageService extends IService<TMessage> {
     PageInfo<CoaMessageDto> selectMessageByCoaId(int coaId, int pageSize, int pageIndex, String status);
 
     //教练新增一条留言
-    void insertMessage(CoaMessageParam coaMessageParam);
+    void insertMessage(CoaMessageParam coaMessageParam, CoaDtoToken coaDtoToken);
 }

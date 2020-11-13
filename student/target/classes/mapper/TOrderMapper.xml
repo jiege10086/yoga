@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.TOrderMapper">
+    <insert id="addUserOrder">
+        insert into t_order(coa_id,coa_name,u_id,u_name,reservation_time,status,u_phone) values (#{coaId},#{coaName},#{uId},#{uName},#{reservationTime},#{status},#{uPhone});
+    </insert>
+    <update id="updateOrderStatus">
+        update t_order set status=6 where ord_id=#{ordId};
+    </update>
+
+    <select id="showUserOrder" resultType="com.woniu.domain.TOrder">
+        select * from t_user where u_id=#{uId};
+    </select>
+    <select id="selectOrder" resultType="com.woniu.domain.TOrder">
+        select * from t_order where ord_id=#{ordId};
+    </select>
+</mapper>

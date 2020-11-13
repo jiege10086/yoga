@@ -58,5 +58,7 @@ public class TUserController {
         tUserService.insertCoaMyUser(Integer.parseInt(coach.getCoaId()),userId);
         return new JSONResult("200","新增成功",null,null);
     }
+
+
 }
 

@@ -7,11 +7,31 @@
     <insert id="registUserByEmamil">
         insert into t_user(u_e_mail,u_password) values(#{uEmail},#{uPassword});
     </insert>
+    <update id="addCoaClich">
+        update coach_trading set clinch_success=clinch_success+1;
+    </update>
+    <update id="addUserMoney">
+        update t_user set u_money=#{uMoney} where u_id=#{uId};
+    </update>
+
+
     <update id="perfectUserInfoByUEmail">
         update t_user set u_phone=#{uPhone},u_e_mail=#{uEMail},u_show_status=#{uShowStatus},u_head_portrait=#{uHeadPortrait},u_name=#{uName},u_address=#{uAddress},u_truename=#{uTruename},u_idcard=#{uIdcard},u_qq=#{uQq} where u_e_mail=#{uEMail};
     </update>
     <update id="perfectUserInfoByUphone">
         update t_user set u_phone=#{uPhone},u_e_mail=#{uEMail},u_show_status=#{uShowStatus},u_head_portrait=#{uHeadPortrait},u_name=#{uName},u_address=#{uAddress},u_truename=#{uTruename},u_idcard=#{uIdcard},u_qq=#{uQq} where u_phone=#{uPhone};
+    </update>
+    <update id="updateUserMoney">
+        update t_user set u_money=#{money} where u_id=#{uId};
+    </update>
+    <update id="updateUserAttention">
+        update t_user set u_attention_coach=#{json} where uId=#{userId};
+    </update>
+    <update id="updateUserVenAttention">
+        update t_user set u_attention_venues=#{json} where uId=#{userId};
+    </update>
+    <update id="updateUserUserAttention">
+        update t_user set u_attention_user=#{json} where uId=#{userId};
     </update>
 
     <select id="searchUserByPhone" resultType="com.woniu.domain.TUser">
@@ -25,5 +45,8 @@
     </select>
     <select id="userLoginByEmail" resultType="com.woniu.domain.TUser">
         select * from t_user where u_e_mail=#{uEMail} and u_password=#{uPassword};
+    </select>
+    <select id="searchUserById" resultType="com.woniu.domain.TUser">
+        select * from t_user where u_id=#{uId};
     </select>
 </mapper>

@@ -15,13 +15,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({BindException.class})
     public JsonResult handlerBindException(Exception e){
         e.printStackTrace();
-        return new JsonResult(505,"参数异常",null);
+        return new JsonResult(505,"参数异常",null,null);
     }
 
     @ExceptionHandler({Exception.class})
     public JsonResult handlerException(Exception e){
         e.printStackTrace();
-        return new JsonResult(500,"服务器异常",null);
+        return new JsonResult(500,"服务器异常",null,null);
     }
 
 }
