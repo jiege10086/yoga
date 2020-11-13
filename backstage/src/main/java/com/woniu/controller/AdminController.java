@@ -6,6 +6,7 @@ import com.woniu.domain.Admin;
 import com.woniu.doparam.AdminParam;
 import com.woniu.dto.AdminToken;
 import com.woniu.service.AdminService;
+import com.woniu.service.TVenuesService;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import com.woniu.utils.MD5Util;
@@ -33,6 +34,10 @@ public class AdminController {
     @Resource
     private AdminService adminService;
 
+
+    /*
+    * 管理员登录
+    * */
     @GetMapping("/admninLogin")
     public JSONResult login(HttpServletResponse response, AdminParam adminParam) throws Throwable {
         QueryWrapper<Admin> adminQueryWrapper = new QueryWrapper<>();

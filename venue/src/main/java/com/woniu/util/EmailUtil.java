@@ -10,8 +10,8 @@ public class EmailUtil {
         email.setHostName("smtp.163.com");//邮箱的SMTP服务器，一般123邮箱的是smtp.123.com,qq邮箱为smtp.qq.com
         email.setCharset("utf-8");//设置发送的字符类型
         email.addTo(emailAddress);//设置收件人
-        email.setFrom("m15023652381@163.com","yujia");//发送人的邮箱为自己的，用户名可以随便填
-        email.setAuthentication("m15023652381@163.com","KAZZJLSXMORGJMBO");//设置发送人到的邮箱和用户名和授权码(授权码是自己设置的)
+        email.setFrom("z13098651256@163.com","yujia");//发送人的邮箱为自己的，用户名可以随便填
+        email.setAuthentication("z13098651256@163.com","AUCLOGJRHDYLFBBT");//设置发送人到的邮箱和用户名和授权码(授权码是自己设置的)
         email.setSubject("这是一条由瑜伽App验证消息");//设置发送主题
         String mess =newVerifyCode();
         email.setMsg(mess);//设置发送内容
