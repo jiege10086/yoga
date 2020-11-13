@@ -5,6 +5,16 @@ public class CoaDtoToken {
 
     private String role;
 
+    private String coaName;
+
+    public String getCoaName() {
+        return coaName;
+    }
+
+    public void setCoaName(String coaName) {
+        this.coaName = coaName;
+    }
+
     public String getCoaId() {
         return coaId;
     }

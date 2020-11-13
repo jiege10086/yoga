@@ -1,5 +1,7 @@
 package com.woniu.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.domain.TCoach;
 import com.woniu.domain.TConsumption;
@@ -16,7 +18,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -68,7 +72,13 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
 
     //新密码返回
     @Override
-    public String newPassword(String coaName) throws Exception {
+    public String newPassword(String coaName,Integer status) throws Exception {
+        if(status==0){
+            //发送给电话
+        }
+        if(status==1){
+            //发送给邮箱
+        }
         String password = UUID.randomUUID().toString().substring(0, 6);
         rt.opsForValue().set("newpassword"+coaName,password,30*60, TimeUnit.SECONDS);
         return password;
@@ -78,8 +88,6 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
     @Override
     public void newPasswordLogin(String coaName,String password) throws Exception {
         Object newpassword = rt.opsForValue().get("newpassword" + coaName);
-        System.out.println(newpassword);
-        System.out.println(password);
         if(newpassword==null){
             throw new NumberNotFoundException("密码已过期");
         }
@@ -111,6 +119,44 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         tConsumption.setPeopleId(coaId);
         tConsumption.setPeoRole(1);
         tConsumptionMapper.insert(tConsumption);
+    }
+
+    //教练添加关注
+    @Override
+    public void insertAttention(Integer coaId, Integer peoId, Integer role) {
+        TCoach tCoach = coachMapper.selectById(coaId);
+        rt.opsForHash().put("Attention:"+coaId,peoId+"",111);
+        if(role==0){
+            String user = tCoach.getAttentionUser();
+            List<Integer> userarray = JSON.parseArray(user,Integer.class);
+            if (userarray==null){
+                userarray=new ArrayList<Integer>();
+            }
+            userarray.add(peoId);
+            String jsonString = JSON.toJSONString(userarray);
+            tCoach.setAttentionUser(jsonString);
+        }
+        if(role==1){
+            String user = tCoach.getAttentionCoach();
+            List<Integer> userarray = JSON.parseArray(user,Integer.class);
+            if (userarray==null){
+                userarray=new ArrayList<Integer>();
+            }
+            userarray.add(peoId);
+            String jsonString = JSON.toJSONString(userarray);
+            tCoach.setAttentionCoach(jsonString);
+        }
+        if(role==2){
+            String user = tCoach.getAttentionVenues();
+            List<Integer> userarray = JSON.parseArray(user,Integer.class);
+            if (userarray==null){
+                userarray=new ArrayList<Integer>();
+            }
+            userarray.add(peoId);
+            String jsonString = JSON.toJSONString(userarray);
+            tCoach.setAttentionVenues(jsonString);
+        }
+        coachMapper.updateById(tCoach);
     }
 
     //教练注册

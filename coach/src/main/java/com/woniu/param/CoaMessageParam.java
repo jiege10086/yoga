@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 public class CoaMessageParam {
 
-    private Integer sendId;
 
     private String detail;
 
@@ -15,17 +14,8 @@ public class CoaMessageParam {
 
     private Integer peoRole;
 
-    private String readStatus;
 
-    private String sendName;
 
-    public Integer getSendId() {
-        return sendId;
-    }
-
-    public void setSendId(Integer sendId) {
-        this.sendId = sendId;
-    }
 
     public String getDetail() {
         return detail;
@@ -51,31 +41,14 @@ public class CoaMessageParam {
         this.peoRole = peoRole;
     }
 
-    public String getReadStatus() {
-        return readStatus;
-    }
-
-    public void setReadStatus(String readStatus) {
-        this.readStatus = readStatus;
-    }
-
-    public String getSendName() {
-        return sendName;
-    }
-
-    public void setSendName(String sendName) {
-        this.sendName = sendName;
-    }
 
     @Override
     public String toString() {
         return "TMessage{" +
-                ", sendId=" + sendId +
+
                 ", detail=" + detail +
                 ", acceptId=" + acceptId +
                 ", peoRole=" + peoRole +
-                ", readStatus=" + readStatus +
-                ", sendName=" + sendName +
                 "}";
     }
 }

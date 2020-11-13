@@ -1,5 +1,7 @@
 package com.woniu.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.Page;
@@ -60,6 +62,16 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> impleme
         TOrder tOrder = new TOrder();
         tOrder.setOrdId(ordId);
         tOrder.setStatus(status);
+        //修改为同意状态
+        if(status==1){
+            //将用户id放入教练的我的学员
+            TOrder order = tOrderMapper.selectById(ordId);
+            TCoach tCoach = tCoachMapper.selectById(coaId);
+            List<Integer> users = JSON.parseArray(tCoach.getMyUser(),Integer.class);
+            users.add(order.getuId());
+            tCoach.setMyUser(JSON.toJSONString(users));
+            tCoachMapper.updateById(tCoach);
+        }
         //状态为开始上课加入上课时间和秒数方便计算
         if (status==3){
             tOrder.setStartTime(new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date()));
