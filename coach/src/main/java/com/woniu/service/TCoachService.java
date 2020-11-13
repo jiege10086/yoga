@@ -21,11 +21,11 @@ public interface TCoachService extends IService<TCoach> {
 
     void updateCoach(TCoach tCoach) throws Exception;
 
-    String newPassword(String coaName) throws Exception;
+    String newPassword(String coaName,Integer status) throws Exception;
 
     void newPasswordLogin(String coaName,String password) throws  Exception;
 
     void coaGetMoney(Integer bankcard,Double money,Integer coaId)throws  Exception;
 
-
+    void insertAttention(Integer coaId,Integer peoId,Integer role);
 }

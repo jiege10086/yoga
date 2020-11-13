@@ -19,4 +19,6 @@ public interface TCoachService extends IService<TCoach> {
     List<TCoach> selectAllCoach();
 
     TCoach selectCoach(Integer coaId);
+
+    List<TCoach> searchCoaches(double price, String factions, int certificationStatus, int morningStatus, int afternoonStatus, int nightStatus);
 }

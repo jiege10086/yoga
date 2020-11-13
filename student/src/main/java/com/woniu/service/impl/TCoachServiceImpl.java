@@ -33,4 +33,9 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         TCoach tCoach = tCoachMapper.selectCoach(coaId);
         return tCoach;
     }
+
+    @Override
+    public List<TCoach> searchCoaches(double price, String factions, int certificationStatus, int morningStatus, int afternoonStatus, int nightStatus) {
+        return tCoachMapper.searchCoaches(price,factions,certificationStatus,morningStatus,afternoonStatus,nightStatus);
+    }
 }

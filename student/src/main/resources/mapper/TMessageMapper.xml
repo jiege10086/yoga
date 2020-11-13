@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.TMessageMapper">
+
+    <insert id="addUserCommit">
+        insert into t_message (send_id,detail,accept_id,peo_role,send_name) values (#{uId},#{detail},#{acceptId},0,#{sendName});
+    </insert>
+    <select id="showUserMessages" resultType="com.woniu.domain.TMessage">
+        select * from t_message where send_id=#{uid};
+    </select>
+</mapper>

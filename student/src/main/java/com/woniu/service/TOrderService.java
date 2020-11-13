@@ -23,4 +23,10 @@ public interface TOrderService extends IService<TOrder> {
     TOrder selectOrder(Integer ordId);
 
     void updateOrderStatus(Integer ordId);
+
+    TOrder selectUserOrder(Integer uId, Integer coaId);
+
+    void updateuserSubscribe(Integer uId, String uName, Integer coaId, String coaName, String reservationTime, int status, int uPhone);
+
+    void adduserSubscribe(Integer uId, String uName, Integer coaId, String coaName, String reservationTime, int status, int uPhone);
 }

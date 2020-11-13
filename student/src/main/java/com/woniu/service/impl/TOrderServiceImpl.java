@@ -42,4 +42,19 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> impleme
     public void updateOrderStatus(Integer ordId) {
         tOrderMapper.updateOrderStatus(ordId);
     }
+
+    @Override
+    public TOrder selectUserOrder(Integer uId, Integer coaId) {
+        return tOrderMapper.selectUserOrder(uId,coaId);
+    }
+
+    @Override
+    public void updateuserSubscribe(Integer uId, String uName, Integer coaId, String coaName, String reservationTime, int status, int uPhone) {
+        tOrderMapper.updateuserSubscribe(uId,uName,coaId,coaName,reservationTime,status,uPhone);
+    }
+
+    @Override
+    public void adduserSubscribe(Integer uId, String uName, Integer coaId, String coaName, String reservationTime, int status, int uPhone) {
+        tOrderMapper.adduserSubscribe(uId,uName,coaId,coaName,reservationTime,status,uPhone);
+    }
 }

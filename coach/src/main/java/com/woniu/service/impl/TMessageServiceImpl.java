@@ -5,12 +5,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.domain.TMessage;
 import com.woniu.domain.TOrder;
+import com.woniu.dto.CoaDtoToken;
 import com.woniu.dto.CoaMessageDto;
 import com.woniu.mapper.TMessageMapper;
 import com.woniu.param.CoaMessageParam;
 import com.woniu.service.TMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,29 +35,28 @@ public class TMessageServiceImpl extends ServiceImpl<TMessageMapper, TMessage> i
     //教练查看自己的留言
     @Override
     public PageInfo<CoaMessageDto> selectMessageByCoaId(int coaId, int pageSize, int pageIndex, String status) {
-        PageHelper.startPage(pageIndex, 10);
+        PageHelper.startPage(pageIndex,pageSize);
         QueryWrapper<TMessage> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("accept_id",coaId);
         queryWrapper.eq("peo_role",1);
-        if(status==null){
+        if(status!=null){
             queryWrapper.eq("read_status",status);
         }
         List<TMessage> tMessages = tMessageMapper.selectList(queryWrapper);
-        List<CoaMessageDto> dtos = new ArrayList<CoaMessageDto>();
-        for(TMessage tMessage:tMessages){
-            CoaMessageDto coaMessageDto = new CoaMessageDto();
-            BeanUtils.copyProperties(tMessage,coaMessageDto);
-            dtos.add(coaMessageDto);
-        }
-        PageInfo<CoaMessageDto> pageinfo=new PageInfo<CoaMessageDto>(dtos);
-        return pageinfo;
+        PageInfo<TMessage> pageinfo=new PageInfo<TMessage>(tMessages);
+        PageInfo<CoaMessageDto> newpageinfo=new PageInfo<CoaMessageDto>();
+        BeanUtils.copyProperties(pageinfo,newpageinfo);
+        return newpageinfo;
     }
 
     //教练新增一条留言
     @Override
-    public void insertMessage(CoaMessageParam coaMessageParam) {
+    public void insertMessage(CoaMessageParam coaMessageParam, CoaDtoToken coaDtoToken) {
         TMessage tMessage = new TMessage();
         BeanUtils.copyProperties(coaMessageParam,tMessage);
+        tMessage.setSendId(Integer.parseInt(coaDtoToken.getCoaId()));
+        tMessage.setReadStatus("未读");
+        tMessage.setSendName(coaDtoToken.getCoaName());
         tMessageMapper.insert(tMessage);
     }
 }

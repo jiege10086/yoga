@@ -7,6 +7,7 @@
     <insert id="registUserByEmamil">
         insert into t_user(u_e_mail,u_password) values(#{uEmail},#{uPassword});
     </insert>
+
     <update id="addUserMoney">
         update t_user set u_money=#{uMoney} where u_id=#{uId};
     </update>
@@ -20,6 +21,15 @@
     </update>
     <update id="updateUserMoney">
         update t_user set u_money=#{money} where u_id=#{uId};
+    </update>
+    <update id="updateUserAttention">
+        update t_user set u_attention_coach=#{json} where uId=#{userId};
+    </update>
+    <update id="updateUserVenAttention">
+        update t_user set u_attention_venues=#{json} where uId=#{userId};
+    </update>
+    <update id="updateUserUserAttention">
+        update t_user set u_attention_user=#{json} where uId=#{userId};
     </update>
 
     <select id="searchUserByPhone" resultType="com.woniu.domain.TUser">

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.dao.CoachTradingMapper">
+    <insert id="addNewCoaClich">
+        insert into coach_trading(coa_id,coa_name,clinch_success,clinch_false) values (#{coaId},#{coaName},#{clisuccess},0);
+    </insert>
+    <update id="addCoaClich">
+        update coach_trading set clinch_success=#{clinchSuccess} where coa_id=#{coaId};
+    </update>
+    <update id="commitCoach">
+        update coach_trading set good_praise=#{goodPraise1},general_praise=#{generalPraise1},bad_praise=#{badPraise1} where coa_id=#{coaId};
+    </update>
+    <select id="selectByCoaId" resultType="com.woniu.domain.CoachTrading">
+        select * from coach_trading where coa_id=#{coaId};
+    </select>
+    <select id="selectCoaTradings" resultType="com.woniu.domain.CoachTrading">
+        select * from coach_trading where coa_id=#{coaId};
+    </select>
+</mapper>

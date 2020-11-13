@@ -8,4 +8,7 @@
     <select id="selectCoach" resultType="com.woniu.domain.TCoach">
         select * from t_coach where coa_id=#{coaId};
     </select>
+    <select id="searchCoaches" resultType="com.woniu.domain.TCoach">
+        select * from t_coach where price=#{price} and factions=#{factions} and certification_status=#{certificationStatus} and morning_status=#{morningStatus} and afternoon_status=#{afternoonStatus} and nightStatus=#{nightStatus} and search_status=0 and show_status=0;
+    </select>
 </mapper>

@@ -38,4 +38,13 @@ public interface TUserMapper extends BaseMapper<TUser> {
     void addUserMoney(Integer uId, double uMoney);
 
     void updateUserMoney(Integer uId, double money);
+
+    void updateUserAttention(Integer userId, String json);
+
+    void updateUserVenAttention(Integer userId, String json);
+
+    void updateUserUserAttention(Integer userId, String json);
+
+
+    void addCoaClich(Integer coaId, String coaName);
 }

@@ -1,11 +1,11 @@
 package com.woniu.service;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.domain.TUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.woniu.dto.CoaAddressDtoList;
 import com.woniu.dto.CoaUserDto;
+import com.woniu.dto.CoachDto;
 
 import java.util.List;
 
@@ -23,4 +23,5 @@ public interface TUserService extends IService<TUser> {
     List<CoaAddressDtoList> selectCoaByAddress(double longitude,double latitude,double fanwei);
 
     void insertCoaMyUser (int coaId,int userId);
+
 }
