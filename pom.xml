@@ -89,7 +89,10 @@
         <module>venue</module>
         <module>backstage</module>
         <module>coach</module>
-        <module>publicinterface</module>
+        <module>dynamic</module>
+        <module>message</module>
+        <module>signing</module>
+        <module>order</module>
     </modules>
 
 
