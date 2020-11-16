@@ -13,10 +13,10 @@ com\woniu\mapper\TVenuesMapper.class
 com\woniu\dto\CoaUserDto.class
 com\woniu\mapper\TCoachMapper.class
 com\woniu\service\impl\TOrderServiceImpl.class
-com\woniu\jedisconfig\RtUtilsConfig.class
 com\woniu\dto\CoaAddressDtoList.class
 com\woniu\mapper\TMessageMapper.class
 com\woniu\controller\TSigningController.class
+com\woniu\config\RtUtilsConfig.class
 com\woniu\domain\TSigning.class
 com\woniu\param\DynamicParam.class
 com\woniu\service\impl\TMessageServiceImpl.class
@@ -37,6 +37,7 @@ com\woniu\service\impl\TCoachServiceImpl.class
 com\woniu\domain\TOrder.class
 com\woniu\fen\PublicIntegerFen.class
 com\woniu\service\TCoachService.class
+com\woniu\config\Fenfilter.class
 com\woniu\domain\TCoach.class
 com\woniu\fen\OrderFen.class
 com\woniu\param\CoaMessageParam.class

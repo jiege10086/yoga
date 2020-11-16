@@ -11,6 +11,7 @@ com\woniu\domain\TOrder.class
 com\woniu\controller\CoachTradingController.class
 com\woniu\dto\CoaUserDto.class
 com\woniu\mapper\TCoachMapper.class
+com\woniu\Orderstart.class
 com\woniu\service\impl\TOrderServiceImpl.class
 com\woniu\domain\TCoach.class
 com\woniu\dto\CoaAddressDtoList.class
@@ -18,5 +19,4 @@ com\woniu\domain\TUser.class
 com\woniu\dto\CoachDto.class
 com\woniu\domain\CoachTrading.class
 com\woniu\service\impl\CoachTradingServiceImpl.class
-com\woniu\App.class
 com\woniu\exception\NumberNotFoundException.class

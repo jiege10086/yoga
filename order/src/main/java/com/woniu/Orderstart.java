@@ -12,10 +12,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @MapperScan("com.woniu.mapper")
 @EnableSwagger2
-public class App 
+public class Orderstart
 {
     public static void main( String[] args )
     {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(Orderstart.class, args);
     }
 }
