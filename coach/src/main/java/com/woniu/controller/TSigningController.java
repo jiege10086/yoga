@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.woniu.domain.TSigning;
 import com.woniu.dto.CoaDtoToken;
 import com.woniu.exception.NumberNotFoundException;
+import com.woniu.fen.Signingfen;
 import com.woniu.service.TSigningService;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
@@ -28,7 +29,7 @@ import javax.annotation.Resource;
 @RequestMapping("/tSigning")
 public class TSigningController {
     @Resource
-    private TSigningService tSigningService;
+    private Signingfen signingfen;
 
     //对场馆发起签约请求
     @RequestMapping("/insertSigningByCoa")
@@ -36,8 +37,7 @@ public class TSigningController {
         if(token==null){
             throw new NumberNotFoundException("权限不足,您还未登陆");
         }
-        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
-        tSigningService.insertSigningByCoa(Integer.parseInt(coach.getCoaId()),venId,detail);
+        signingfen.insertSigningByCoa(venId,detail);
         return new JSONResult("200","发起成功",null,null);
     }
 
@@ -47,11 +47,9 @@ public class TSigningController {
         if(token==null){
             throw new NumberNotFoundException("权限不足,您还未登陆");
         }
-        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
-        System.out.println(tSigningService
-                .selectSigningByCoa(Integer.parseInt(coach.getCoaId()),agreeStatus,status,pageSize,pageIndex));
-        return new JSONResult("200","查询成功",null,tSigningService
-                .selectSigningByCoa(Integer.parseInt(coach.getCoaId()),agreeStatus,status,pageSize,pageIndex));
+
+        return new JSONResult("200","查询成功",null,signingfen
+                .selectSigningByCoa(agreeStatus,status,pageSize,pageIndex));
     }
 
     //教练发起请求同意或者拒绝
@@ -60,8 +58,7 @@ public class TSigningController {
         if(token==null){
             throw new NumberNotFoundException("权限不足,您还未登陆");
         }
-        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
-        tSigningService.updateSigningByCoa(Integer.parseInt(coach.getCoaId()),sigId,venId,agreeStatus);
+        signingfen.updateSigningByCoa(sigId,venId,agreeStatus);
     }
 }
 
