@@ -4,10 +4,10 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.woniu.domin
 server:
-  port: 8085
+  port: 8083
 spring:
   application:
-    name: publicinterface
+    name: dynamic
   cloud:
     nacos:
       discovery:
@@ -21,7 +21,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
   redis:
-    host: 192.168.135.129
+    host: 10.66.125.25
     port: 6379
 #    cluster:
 #      nodes:

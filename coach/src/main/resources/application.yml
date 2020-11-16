@@ -4,7 +4,7 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.woniu.domin
 server:
-  port: 8082
+  port: 8081
 spring:
   application:
     name: coach
@@ -21,8 +21,9 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
   redis:
-    host: 192.168.135.129
+    host: 10.66.125.25
     port: 6379
+    password: PX40708991
 #    cluster:
 #      nodes:
 #      - 192.168.135.129:6379

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.CoachTradingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.woniu.domain.CoachTrading">
+        <id column="id" property="id" />
+        <result column="coa_id" property="coaId" />
+        <result column="coa_name" property="coaName" />
+        <result column="clinch_success" property="clinchSuccess" />
+        <result column="clinch_false" property="clinchFalse" />
+        <result column="good_praise" property="goodPraise" />
+        <result column="general_praise" property="generalPraise" />
+        <result column="bad_praise" property="badPraise" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, coa_id, coa_name, clinch_success, clinch_false, good_praise, general_praise, bad_praise
+    </sql>
+
+</mapper>

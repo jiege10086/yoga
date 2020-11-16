@@ -7,9 +7,7 @@
     <insert id="registUserByEmamil">
         insert into t_user(u_e_mail,u_password) values(#{uEmail},#{uPassword});
     </insert>
-    <update id="addCoaClich">
-        update coach_trading set clinch_success=clinch_success+1;
-    </update>
+
     <update id="addUserMoney">
         update t_user set u_money=#{uMoney} where u_id=#{uId};
     </update>

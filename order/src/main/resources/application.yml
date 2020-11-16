@@ -1,0 +1,33 @@
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.woniu.domin
+server:
+  port: 8082
+spring:
+  application:
+    name: order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: ''
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/four_end?useUnicode=true&characterEncoding=utf-8
+    username: root
+  jackson:
+    date-format: yyyy-MM-dd
+  redis:
+    host: 192.168.135.129
+    port: 6379
+#    cluster:
+#      nodes:
+#      - 192.168.135.129:6379
+#      - 192.168.135.129:6380
+#      - 192.168.135.129:6381
+#      - 192.168.135.129:6382
+#      - 192.168.135.129:6383
+#      - 192.168.135.129:6384

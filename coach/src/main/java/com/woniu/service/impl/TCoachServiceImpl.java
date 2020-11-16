@@ -2,17 +2,24 @@ package com.woniu.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.woniu.domain.TCoach;
 import com.woniu.domain.TConsumption;
+import com.woniu.dto.CoachDto;
 import com.woniu.exception.NumberNotFoundException;
 import com.woniu.mapper.TCoachMapper;
 import com.woniu.mapper.TConsumptionMapper;
+import com.woniu.param.CoaMessageParam;
 import com.woniu.param.CoaRegister;
+import com.woniu.param.CoaSelectParam;
 import com.woniu.service.TCoachService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.woniu.utils.MD5Util;
 import com.woniu.utils.UUIDUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -43,9 +50,9 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
     @Autowired
     private RedisTemplate<String, Object> rt;
 
-    public void selectCoachById() throws Exception{
-        TCoach tCoach = coachMapper.selectById(1);
-        System.out.println(tCoach);
+    public TCoach selectCoachById(int coaId) throws Exception{
+        TCoach tCoach = coachMapper.selectById(coaId);
+        return tCoach;
     }
 
     @Override
@@ -159,6 +166,36 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
         coachMapper.updateById(tCoach);
     }
 
+    //根据条件查询教练
+    @Override
+    public PageInfo<CoachDto> selectCoach(CoaSelectParam coaSelectParam) {
+        QueryWrapper<TCoach> queryWrapper = new QueryWrapper<>();
+        //判断用户需要什么时候有时间的
+        //早
+        if (coaSelectParam.getTimeStatus()==1){
+            queryWrapper.eq("morning_status",0);
+        }
+        //中
+        if (coaSelectParam.getTimeStatus()==2){
+            queryWrapper.eq("afternoon_status",0);
+        }
+        //晚
+        if (coaSelectParam.getTimeStatus()==3){
+            queryWrapper.eq("night_status",0);
+        }
+        queryWrapper.like("coa_name",coaSelectParam.getCoaName());
+        //要课没满和不接受私教的,或者无论怎样都能搜索的
+        queryWrapper.eq("class_full_status",0);
+        queryWrapper.eq("private_status",0);
+        queryWrapper.or(Wrapper->Wrapper.eq("search_status",1));
+        PageHelper.startPage(coaSelectParam.getPageIndex(),coaSelectParam.getPageSize());
+        List<TCoach> tCoaches = coachMapper.selectList(queryWrapper);
+        PageInfo<TCoach> tCoachPageInfo = new PageInfo<>(tCoaches);
+        PageInfo<CoachDto> dtoPageInfo = new PageInfo<>();
+        BeanUtils.copyProperties(tCoachPageInfo,dtoPageInfo);
+        return dtoPageInfo;
+    }
+
     //教练注册
     @Override
     public void insertCoach(CoaRegister coaRegister) throws Exception {
@@ -193,7 +230,7 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
             //课满状态
             tCoach.setClassFullStatus(0);
             //是否课满,不接受私教也可以搜索
-            tCoach.setSearchStatus(0);
+            tCoach.setSearchStatus(1);
             coachMapper.insert(tCoach);
         }
 
@@ -228,7 +265,7 @@ public class TCoachServiceImpl extends ServiceImpl<TCoachMapper, TCoach> impleme
             //课满状态
             tCoach.setClassFullStatus(0);
             //是否课满,不接受私教也可以搜索
-            tCoach.setSearchStatus(0);
+            tCoach.setSearchStatus(1);
             coachMapper.insert(tCoach);
         }
     }

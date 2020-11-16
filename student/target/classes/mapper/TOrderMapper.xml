@@ -4,14 +4,23 @@
     <insert id="addUserOrder">
         insert into t_order(coa_id,coa_name,u_id,u_name,reservation_time,status,u_phone) values (#{coaId},#{coaName},#{uId},#{uName},#{reservationTime},#{status},#{uPhone});
     </insert>
+    <insert id="adduserSubscribe">
+        insert into t_order(u_id,u_name,coa_id,coa_name,reservation_time,status,u_phone) values (#{uId},#{uName},#{coaId},#{coaName},#{reservationTime},#{status},#{uPhone});
+    </insert>
     <update id="updateOrderStatus">
         update t_order set status=6 where ord_id=#{ordId};
     </update>
+    <update id="updateuserSubscribe">
+        update t_order set u_id=#{uId},u_name=#{uName},coa_id=#{coaId},coa_name=#{coaName},reservation_time=#{reservationTime},status=#{status},u_phone=#{uPhone};
+    </update>
 
     <select id="showUserOrder" resultType="com.woniu.domain.TOrder">
-        select * from t_user where u_id=#{uId};
+        select * from t_order where u_id=#{uId};
     </select>
     <select id="selectOrder" resultType="com.woniu.domain.TOrder">
         select * from t_order where ord_id=#{ordId};
+    </select>
+    <select id="selectUserOrder" resultType="com.woniu.domain.TOrder">
+        select * from t_order where u_id=#{uid} and coa_id=#{coaId};
     </select>
 </mapper>

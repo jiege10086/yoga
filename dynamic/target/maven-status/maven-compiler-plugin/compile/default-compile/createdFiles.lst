@@ -6,8 +6,8 @@ com\woniu\domain\TUser.class
 com\woniu\config\RtUtilsConfig.class
 com\woniu\controller\file.class
 com\woniu\mapper\TUserMapper.class
-com\woniu\PublicInterface.class
 com\woniu\service\impl\TDynamicServiceImpl.class
+com\woniu\dynamic.class
 com\woniu\param\DynamicParam.class
 com\woniu\service\TDynamicService.class
 com\woniu\dto\DynamicDto.class
