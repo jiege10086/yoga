@@ -1,10 +1,10 @@
-mybatis-plus:
+mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.woniu.domin
 server:
-  port: 8083
+  port: 8082
 spring:
   application:
     name: dynamic
@@ -21,13 +21,5 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
   redis:
-    host: 10.66.125.25
+    host: 192.168.135.129
     port: 6379
-#    cluster:
-#      nodes:
-#      - 192.168.135.129:6379
-#      - 192.168.135.129:6380
-#      - 192.168.135.129:6381
-#      - 192.168.135.129:6382
-#      - 192.168.135.129:6383
-#      - 192.168.135.129:6384

@@ -54,5 +54,14 @@ public class TcomController {
     public boolean friend(int selectId,int accpetId){
         return tDynamicService.friend(selectId,accpetId);
     }
+
+
+    //主页动态
+    @RequestMapping("/selectDynByAll")
+    public JSONResult selectDynByAll(int pageSize,int pageIndex){
+        PageInfo<DynamicDto> pageInfo = tDynamicService.selectDynByAll(pageSize, pageIndex);
+        return new JSONResult("200","查询成功",null,pageInfo);
+    }
+
 }
 

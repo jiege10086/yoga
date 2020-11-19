@@ -20,4 +20,8 @@ public interface DynamicFen {
     //新增一条动态信息
     @RequestMapping("/tcom/insertDynByUuid")
     public JSONResult insertDynByUuid(@RequestBody DynamicParam dynamicParam);
+
+    //判断是否好友
+    @RequestMapping("/tcom/friend")
+    public boolean friend(@RequestParam int coaId,@RequestParam int venId);
 }

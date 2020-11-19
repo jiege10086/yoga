@@ -24,4 +24,7 @@ public interface TDynamicService extends IService<TDynamic> {
     void insertDynByUuid(DynamicParam dynamicParam);
 
     boolean friend(int selectId,int accpetId);
+
+    //主页图文
+    PageInfo<DynamicDto> selectDynByAll(int pageSize,int pageIndex);
 }

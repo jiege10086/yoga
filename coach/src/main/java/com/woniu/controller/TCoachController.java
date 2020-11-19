@@ -8,6 +8,7 @@ import com.woniu.dto.CoaDtoToken;
 import com.woniu.exception.NumberNotFoundException;
 import com.woniu.fen.DynamicFen;
 import com.woniu.param.CoaRegister;
+import com.woniu.param.DynamicParam;
 import com.woniu.service.impl.TCoachServiceImpl;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
@@ -130,6 +131,30 @@ public class TCoachController {
         CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
         JSONResult jsonResult = dynamicFen.selectDynMyId(Integer.parseInt(coach.getCoaId()), pageSize, pageIndex, 1);
         return jsonResult;
+    }
+
+    //教练发布动态
+    @RequestMapping("/insertDynByUuid")
+    public JSONResult insertDynByUuid(@RequestHeader("X-token")String token,@RequestBody DynamicParam dynamicParam) throws Throwable {
+        if(token==null){
+            throw new NumberNotFoundException("权限不足,您还未登陆");
+        }
+        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
+        dynamicParam.setUuid(Integer.parseInt(coach.getCoaId()));
+        dynamicParam.setPeoRole(1);
+        dynamicFen.insertDynByUuid(dynamicParam);
+        return new JSONResult("200","发布成功",null,null);
+    }
+
+    //教练好友判断
+    @RequestMapping("/friend")
+    public JSONResult friend(@RequestHeader("X-token")String token,int accpetId) throws Throwable {
+        if(token==null){
+            throw new NumberNotFoundException("权限不足,您还未登陆");
+        }
+        CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
+        boolean friend = dynamicFen.friend(Integer.parseInt(coach.getCoaId()), accpetId);
+        return new JSONResult("200","发布成功",null,friend);
     }
 }
 

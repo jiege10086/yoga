@@ -131,5 +131,18 @@ public class TDynamicServiceImpl extends ServiceImpl<TDynamicMapper, TDynamic> i
         return false;
     }
 
+    //主页动态
+    @Override
+    public PageInfo<DynamicDto> selectDynByAll(int pageSize, int pageIndex) {
+        PageHelper.startPage(pageIndex,pageSize);
+        QueryWrapper<TDynamic> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("dyn_id");
+        List<TDynamic> tDynamics = tDynamicMapper.selectList(queryWrapper);
+        PageInfo<TDynamic> tDynamicPageInfo = new PageInfo<>(tDynamics);
+        PageInfo<DynamicDto> DynamicDtoPageInfo = new PageInfo<>();
+        BeanUtils.copyProperties(tDynamicPageInfo,DynamicDtoPageInfo);
+        return DynamicDtoPageInfo;
+    }
+
 
 }

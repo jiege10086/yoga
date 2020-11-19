@@ -13,6 +13,8 @@ com\woniu\mapper\TVenuesMapper.class
 com\woniu\dto\CoaUserDto.class
 com\woniu\mapper\TCoachMapper.class
 com\woniu\service\impl\TOrderServiceImpl.class
+com\woniu\service\TVenuesService.class
+com\woniu\controller\TVenuesController.class
 com\woniu\dto\CoaAddressDtoList.class
 com\woniu\mapper\TMessageMapper.class
 com\woniu\controller\TSigningController.class
@@ -43,10 +45,12 @@ com\woniu\fen\OrderFen.class
 com\woniu\param\CoaMessageParam.class
 com\woniu\service\TSigningService.class
 com\woniu\controller\Test.class
+com\woniu\service\impl\TVenuesServiceImpl.class
 com\woniu\domain\TUser.class
 com\woniu\dto\CoachDto.class
 com\woniu\fen\Signingfen.class
 com\woniu\param\ParamVO.class
+com\woniu\dto\VenusDto.class
 com\woniu\service\impl\TSigningServiceImpl.class
 com\woniu\domain\TVenues.class
 com\woniu\exception\NumberNotFoundException.class

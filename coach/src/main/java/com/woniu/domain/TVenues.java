@@ -1,7 +1,5 @@
 package com.woniu.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.io.Serializable;
 
 /**
@@ -10,13 +8,12 @@ import java.io.Serializable;
  * </p>
  *
  * @author jiejiang
- * @since 2020-11-12
+ * @since 2020-11-19
  */
 public class TVenues implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId
     private Integer venId;
 
     private Integer venPhone;
