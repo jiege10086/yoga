@@ -39,7 +39,7 @@ public class JwtUtils {
         //String token=createToken();
         //System.out.println(token);
         //System.out.println(Jwts.parserBuilder().setSigningKey(keyFor).build().parseClaimsJws(token).getBody());
-        token=token.substring(token.length());
+        //token=token.substring(1,token.length()-1);
 
         Claims body = Jwts.parserBuilder().setSigningKey(keyFor).build().parseClaimsJws(token).getBody();
 

@@ -32,7 +32,7 @@
       <module name="common" options="-parameters" />
       <module name="dynamic" options="-parameters" />
       <module name="gateway_server" options="-parameters" />
-      <module name="message" options="" />
+      <module name="message" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="publicinterface" options="-parameters" />
       <module name="signing" options="-parameters" />
