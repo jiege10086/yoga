@@ -1,1 +1,2 @@
 com\woniu\GateWayStart.class
+com\woniu\filter\CrossOriginFilter.class

@@ -10,6 +10,7 @@ import com.woniu.service.TOrderService;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,6 +39,7 @@ public class TOrderController {
         }
         CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
         JSONResult order = orderFen.selectOrderByCoa(pageSize, pageIndex, status);
+        System.out.println(order);
         return order;
     }
 

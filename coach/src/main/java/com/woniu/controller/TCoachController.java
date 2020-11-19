@@ -52,23 +52,26 @@ public class TCoachController {
 
     //教练登录
     @RequestMapping("/coaLogin")
-    public JSONResult coaLogin(HttpServletResponse response, String name, String password,Double jingdu,Double weidu,Double fanwei) throws Throwable {
+    public JSONResult coaLogin(String name, String password,Double longitude,Double latitude) throws Throwable {
+//        System.out.println(jingdu+":"+weidu);
         TCoach tCoach =tCoachService.CoachLogin(name, MD5Util.MD5EncodeUtf8(password));
         boolean flag=true;
         if(tCoach.getIdcard()==null){
             flag=false;
         }
+        System.out.println(tCoach.getCoaId());
         CoaDtoToken coaDtoToken = new CoaDtoToken();
         coaDtoToken.setCoaId(tCoach.getCoaId()+"");
         coaDtoToken.setRole(1+"");
         coaDtoToken.setCoaName(tCoach.getCoaName());
         String token = JwtUtils.createToken(coaDtoToken);
-        response.setHeader("X-token",token);
         //删除上次登录地址
         rt.opsForGeo().remove("coaAddress",tCoach.getCoaId());
         //保存这次登录地址
-        rt.opsForGeo().add("coaAddress",new Point(jingdu, weidu),tCoach.getCoaId());
-        return new JSONResult("200","登陆成功",null,flag);
+        Point point = new Point(longitude,latitude);
+        //rt.opsForGeo().add()
+        rt.opsForGeo().add("coaAddress",point,1);
+        return new JSONResult("200",token,null,flag);
     }
 
     //教练信息完善

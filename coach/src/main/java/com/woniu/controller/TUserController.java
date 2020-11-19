@@ -45,6 +45,7 @@ public class TUserController {
     //用户查看附近的学员
     @RequestMapping("/selectCoaByAddress")
     public JSONResult selectCoaByAddress(double longitude,double latitude,double fanwei){
+        System.out.println(longitude+":"+latitude+":"+fanwei);
         return new JSONResult("200","查询成功", tUserService.selectCoaByAddress(longitude,latitude,fanwei),null);
     }
 

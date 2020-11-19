@@ -10,11 +10,9 @@ import com.woniu.service.TOrderService;
 import com.woniu.utils.JSONResult;
 import com.woniu.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -27,6 +25,7 @@ import javax.annotation.Resource;
  * @since 2020-11-13
  */
 @RestController
+//@CrossOrigin(allowCredentials="true", allowedHeaders="*", methods={RequestMethod.GET,RequestMethod.POST}, origins="*")
 @RequestMapping("/tOrder")
 public class TOrderController {
     @Resource
@@ -37,9 +36,11 @@ public class TOrderController {
     //查询教练的订单
     @RequestMapping("/coaorder")
     public JSONResult selectOrderByCoa(@RequestHeader("X-token") String token, int pageSize, int pageIndex, int status) throws Throwable {
+        System.out.println(token);
         if(token==null){
             throw new NumberNotFoundException("权限不足,您还未登陆");
         }
+        System.out.println(pageSize+":"+pageIndex+":"+status);
         CoaDtoToken coach = JwtUtils.parseToken(token, CoaDtoToken.class);
         PageInfo<TOrder> order = tOrderService.selectOrderByCoa(Integer.parseInt(coach.getCoaId()), pageSize, pageIndex, status);
         return new JSONResult("200","查询成功",null,order);

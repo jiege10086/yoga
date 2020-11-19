@@ -47,7 +47,7 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder> impleme
     //教练查看自己的订单
     @Override
     public PageInfo<TOrder> selectOrderByCoa(int coaId, int pageSize, int pageIndex, int status) {
-        PageHelper.startPage(pageIndex, 10);
+        PageHelper.startPage(pageIndex, pageSize);
         if (status==-1){
             QueryWrapper<TOrder> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("coa_id",coaId);
